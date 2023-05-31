@@ -1,19 +1,15 @@
-import java.util.*;
-
 class Solution {
     public String solution(String letter) {
-        String[] morseCodes = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
-        Map<String, String> morseToAlphabet = new HashMap<>();
-        for (int i = 0; i < morseCodes.length; i++) {
-            morseToAlphabet.put(morseCodes[i], String.valueOf((char)('a' + i)));
+        String answer = "";
+        String[] morse = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        String[] word = letter.split(" ");
+
+        for(int i=0;i<word.length;i++){
+            for(int j=0;j<morse.length;j++){
+                if(word[i].equals(morse[j])) answer+=(char)(j+97);
+            }
         }
 
-        StringBuilder answer = new StringBuilder();
-        String[] letters = letter.split(" ");
-        for (String morse : letters) {
-            answer.append(morseToAlphabet.get(morse));
-        }
-        
-        return answer.toString();
+        return answer;
     }
 }
