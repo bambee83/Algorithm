@@ -1,25 +1,12 @@
 class Solution {
     public int[] solution(String[] keyinput, int[] board) {
-        int x = 0, y = 0;
-        int boardX = board[0] / 2, boardY = board[1] / 2;
-
-        for(String key : keyinput) {
-            switch (key) {
-                case "up":
-                    if(y < boardY) y++;
-                    break;
-                case "down":
-                    if(y > -boardY) y--;
-                    break;
-                case "left":
-                    if(x > -boardX) x--;
-                    break;
-                case "right":
-                    if(x < boardX) x++;
-                    break;
+  int[] now = {0, 0};
+        for (int i = 0; i < keyinput.length; i++){
+            if(keyinput[i].equals("left")) now[0] -= now[0]>-(board[0]/2)?1:0;
+            else if(keyinput[i].equals("right")) now[0] += now[0]<(board[0]/2)?1:0;
+            else if(keyinput[i].equals("down")) now[1] -= now[1]>-(board[1]/2)?1:0;
+            else if(keyinput[i].equals("up")) now[1] += now[1]<(board[1]/2)?1:0;
             }
-        }
-
-        return new int[] {x, y};
+        return now;
     }
 }
