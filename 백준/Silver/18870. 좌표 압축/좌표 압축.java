@@ -4,44 +4,27 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int N = Integer.parseInt(br.readLine());
-        int[] original = new int[N]; // original = [2, 4, -10, 4, -9]
-        int[] sorted = new int[N];
+        int n = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
+        int[] original = new int[n];
+        for (int i = 0; i < n; i++) {
             original[i] = Integer.parseInt(st.nextToken());
-            sorted[i] = original[i];
         }
-
-        // 정렬 및 중복 제거
-        Arrays.sort(sorted); // sorted = [-10, -9, 2, 4, 4]
-        Map<Integer, Integer> rankMap = new HashMap<>(); // rankMap = {}
-        int rank = 0;
-
-        /*
-        좌표값을 순위(rank) 로 매핑
-        rankMap = {-10: 0} rank = 1
-        rankMap = {-10: 0, -9: 1} rank = 2
-        rankMap = {-10: 0, -9: 1, 2: 2} rank = 3
-        rankMap = {-10: 0, -9: 1, 2: 2, 4: 3} rank = 4
-        다섯 번째 값: 4 > rankMap 에 이미 존재 → 무시.
-
-        최종결과 : rankMap = {-10: 0, -9: 1, 2: 2, 4: 3}
-        */
+        
+        int[] sorted = original.clone();
+        Arrays.sort(sorted);
+        Map<Integer, Integer> map = new HashMap<>();
+        int index = 0;
         for (int value : sorted) {
-            if (!rankMap.containsKey(value)) {
-                rankMap.put(value, rank++);
+            if (!map.containsKey(value)) { // 중복 제거
+                map.put(value, index++);  // 값에 대해 압축된 값 매핑
             }
         }
-
-        // 압축된 좌표 출력
+        StringBuilder sb = new StringBuilder();
         for (int value : original) {
-            bw.write(rankMap.get(value) + " ");
+            sb.append(map.get(value)).append(" ");
         }
-
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString().trim());
     }
 }
