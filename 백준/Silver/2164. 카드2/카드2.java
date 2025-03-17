@@ -1,18 +1,29 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Queue<Integer> q = new LinkedList<>();
+
         int N = Integer.parseInt(br.readLine());
-        Queue<Integer> queue = new LinkedList<>();
+        
+        // 카드 번호를 1부터 N까지로 설정
         for (int i = 1; i <= N; i++) {
-            queue.add(i);
+            q.add(i);
         }
-        while (queue.size() > 1) {
-            queue.poll(); // 첫 번째 카드를 버림
-            queue.add(queue.poll()); // 그다음 카드를 맨 뒤로 이동
+
+        // 카드가 한 장 남을 때까지 반복
+        while (q.size() > 1) {
+            q.poll();             // 제일 위의 카드를 버림
+            q.add(q.poll());      // 다음 카드를 맨 아래로 이동
         }
-        System.out.println(queue.peek());
-        }
+
+        // 마지막으로 남은 카드 출력
+        System.out.println(q.poll());
     }
+}
